@@ -1,0 +1,26 @@
+{% extends "app_base.html" %}
+{% block title %}Chat History — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/app_pages.css') }}">{% endblock %}
+
+{% block app_content %}
+<div class="page-wrap">
+  <div class="page-header">
+    <div>
+      <h1>Chat History</h1>
+      <p>Every conversation you've had with MoodFlix AI, in one place.</p>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <a href="{{ url_for('page_routes.chatbot') }}" class="btn btn-primary"><i data-lucide="plus" class="icon-sm"></i> New chat</a>
+      <button class="btn btn-outline" id="clear-history-btn"><i data-lucide="trash-2" class="icon-sm"></i> Clear all</button>
+    </div>
+  </div>
+
+  <div id="history-list" class="history-list"></div>
+  <div id="history-empty" class="card page-empty" style="display:none;">
+    <i data-lucide="history" style="width:32px;height:32px;"></i>
+    <p>No chats yet. Start a conversation to see it here.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/history.js') }}" defer></script>{% endblock %}

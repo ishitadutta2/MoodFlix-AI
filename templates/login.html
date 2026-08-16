@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Log in — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">{% endblock %}
+
+{% block body %}
+<div class="auth-page">
+  <div class="orb" style="width:380px;height:380px;top:-100px;left:-100px;"></div>
+  <div class="orb" style="width:340px;height:340px;bottom:-140px;right:-100px;opacity:.35;"></div>
+
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div class="flex items-center gap-2">
+        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;"><i data-lucide="sparkles" class="icon" style="color:#fff"></i></div>
+        <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:18px;">MoodFlix <span class="gradient-text">AI</span></span>
+      </div>
+    </div>
+
+    <div class="auth-card glass">
+      <h1>Welcome back</h1>
+      <p>Pick up right where your last chat left off.</p>
+
+      <form id="login-form" class="auth-form">
+        <div class="field">
+          <label for="email">Email</label>
+          <input class="input" type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input class="input" type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <input type="checkbox" id="remember-me" style="width:16px;height:16px;">
+          <label for="remember-me" style="margin:0;font-size:13px;font-weight:400;color:var(--muted);">Remember me</label>
+        </div>
+        <a href="{{ url_for('password_reset_routes.forgot_password_page') }}" class="auth-forgot">Forgot password?</a>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+
+      <p class="auth-switch">New here? <a href="{{ url_for('page_routes.signup') }}">Sign up</a></p>
+    </div>
+    <a href="{{ url_for('page_routes.home') }}" class="auth-back">← Back to home</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/login.js') }}" defer></script>{% endblock %}

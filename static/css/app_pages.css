@@ -1,0 +1,313 @@
+/* ============================================================
+   MoodFlix AI — app_pages.css
+   Shared styles for History, Favorites, and Profile pages.
+============================================================ */
+
+.page-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) 60px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.page-header h1 {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.page-header p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.page-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+}
+
+.page-empty i {
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+/* ---------- history list ---------- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.history-row .icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2, rgba(255,255,255,0.06));
+  flex-shrink: 0;
+}
+
+.history-row .titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-row .titles p {
+  font-weight: 600;
+  font-size: 14.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-row .titles span {
+  color: var(--muted);
+  font-size: 12.5px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-row .row-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.history-row input.rename-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- favorites grid ---------- */
+.fav-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.fav-tabs .tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+.favorite-card {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.favorite-card .tile {
+  width: 100%;
+  height: 110px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.favorite-card h4 {
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.favorite-card .meta {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.favorite-card .row-actions {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---------- profile ---------- */
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+}
+
+.profile-avatar-wrap img {
+  width: 84px;
+  height: 84px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.profile-avatar-wrap .avatar-upload-btn {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border: 2px solid var(--bg, #0b0b12);
+  cursor: pointer;
+}
+
+.profile-section {
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.profile-section h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 15.5px;
+  margin-bottom: 4px;
+}
+
+.profile-section .section-desc {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin-bottom: 16px;
+}
+
+.tag-input-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--surface-2, rgba(255,255,255,0.06));
+  font-size: 12.5px;
+}
+
+.tag-chip button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.form-row .field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.danger-zone {
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.form-msg {
+  font-size: 13px;
+  margin-top: 10px;
+  min-height: 18px;
+}
+
+.form-msg.success { color: #4ade80; }
+.form-msg.error { color: #f87171; }
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .page-wrap { padding: 16px 14px 40px; }
+  .page-header { flex-direction: column; align-items: stretch; }
+  .page-header > div:last-child { display: flex; flex-wrap: wrap; }
+  .favorites-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .profile-header-card { flex-direction: column; text-align: center; }
+  .history-row { flex-wrap: wrap; }
+  .history-row .titles { min-width: 100%; order: 1; margin-top: 6px; }
+  .form-row { flex-direction: column; }
+}
+
+/* Toggle switches (notifications / privacy) */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13.5px;
+}
+.toggle-row:last-child { border-bottom: none; }
+
+.toggle-switch {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--surface-2, rgba(255,255,255,0.12));
+  border: none;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform .2s;
+}
+.toggle-switch.on {
+  background: var(--primary);
+}
+.toggle-switch.on::after {
+  transform: translateX(18px);
+}

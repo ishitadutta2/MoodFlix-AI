@@ -1,0 +1,34 @@
+{% extends "app_base.html" %}
+{% block title %}Mood Calendar — MoodFlix AI{% endblock %}
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app_pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mood_calendar.css') }}">
+{% endblock %}
+
+{% block app_content %}
+<div class="page-wrap">
+  <div class="page-header">
+    <div>
+      <h1>Mood Calendar</h1>
+      <p>Every day you chatted gets an emoji for its dominant mood. Click a day to revisit it.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-outline btn-icon" id="cal-prev"><i data-lucide="chevron-left" class="icon-sm"></i></button>
+      <span id="cal-month-label" class="font-mono" style="min-width:140px;text-align:center;font-size:14px;"></span>
+      <button class="btn btn-outline btn-icon" id="cal-next"><i data-lucide="chevron-right" class="icon-sm"></i></button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:20px;">
+    <div class="cal-weekday-row" id="cal-weekdays"></div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <div id="cal-day-panel" class="card profile-section" style="display:none;margin-top:20px;">
+    <h3 id="cal-day-title">—</h3>
+    <div id="cal-day-chats" class="history-list" style="margin-top:12px;"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/mood_calendar.js') }}" defer></script>{% endblock %}

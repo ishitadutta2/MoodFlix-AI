@@ -1,0 +1,45 @@
+{% macro movie_card(m) %}
+<div class="card rec-card holographic-border">
+  <div class="top">
+    <div class="tile poster" style="background:linear-gradient(150deg,hsl({{ m.hue }} 70% 22%),hsl({{ m.hue + 40 }} 65% 12%));"><i data-lucide="film" class="icon"></i></div>
+    <div style="flex:1;min-width:0;">
+      <div class="flex justify-between items-center">
+        <h4>{{ m.title }}</h4>
+        <button class="fav-btn" data-fav-type="movie" data-fav-title="{{ m.title }}" data-fav-genre="{{ m.genre }}" data-fav-year="{{ m.year }}" data-fav-desc="{{ m.desc }}"><i data-lucide="heart" class="icon-sm" fill="none" style="color:var(--muted)"></i></button>
+      </div>
+      <p class="meta">{{ m.year }} · {{ m.genre }}</p>
+    </div>
+  </div>
+  <p class="desc">{{ m.desc }}</p>
+  <div class="rating"><i data-lucide="star" class="icon-sm" fill="var(--accent)" style="color:var(--accent)"></i> {{ m.rating }}/10</div>
+  <button class="btn btn-ghost why-btn"><i data-lucide="info" class="icon-sm"></i> Why this?</button>
+  <p class="why-text hidden">{{ m.why }}</p>
+  <div class="card-actions-row">
+    <button class="btn btn-ghost btn-icon feedback-btn" data-reaction="loved" data-fb-title="{{ m.title }}" data-fb-type="movie" data-fb-genre="{{ m.genre }}" title="Loved it"><i data-lucide="thumbs-up" class="icon-sm"></i></button>
+    <button class="btn btn-ghost btn-icon feedback-btn" data-reaction="disliked" data-fb-title="{{ m.title }}" data-fb-type="movie" data-fb-genre="{{ m.genre }}" title="Not for me"><i data-lucide="thumbs-down" class="icon-sm"></i></button>
+    <a class="btn btn-ghost btn-icon" href="https://www.youtube.com/results?search_query={{ (m.title ~ ' trailer')|urlencode }}" target="_blank" rel="noopener" title="Search trailer on YouTube"><i data-lucide="play-circle" class="icon-sm"></i></a>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro song_card(s) %}
+<div class="card song-card holographic-border">
+  <div class="top">
+    <div class="tile cover" style="background:linear-gradient(150deg,hsl({{ s.hue }} 70% 22%),hsl({{ s.hue + 40 }} 65% 12%));"><i data-lucide="music-2" class="icon"></i></div>
+    <div style="flex:1;min-width:0;">
+      <div class="flex justify-between items-center">
+        <h4>{{ s.title }}</h4>
+        <button class="fav-btn" data-fav-type="song" data-fav-title="{{ s.title }}" data-fav-artist="{{ s.artist }}" data-fav-genre="{{ s.genre }}" data-fav-desc="{{ s.desc }}"><i data-lucide="heart" class="icon-sm" fill="none" style="color:var(--muted)"></i></button>
+      </div>
+      <p class="artist">{{ s.artist }}</p>
+      <p class="meta">{{ s.genre }} · {{ s.duration }}</p>
+    </div>
+  </div>
+  <p class="desc">{{ s.desc }}</p>
+  <div class="card-actions-row">
+    <button class="btn btn-ghost btn-icon feedback-btn" data-reaction="loved" data-fb-title="{{ s.title }}" data-fb-type="song" data-fb-genre="{{ s.genre }}" title="Loved it"><i data-lucide="thumbs-up" class="icon-sm"></i></button>
+    <button class="btn btn-ghost btn-icon feedback-btn" data-reaction="disliked" data-fb-title="{{ s.title }}" data-fb-type="song" data-fb-genre="{{ s.genre }}" title="Not for me"><i data-lucide="thumbs-down" class="icon-sm"></i></button>
+    <a class="btn btn-ghost btn-icon" href="https://www.youtube.com/results?search_query={{ (s.title ~ ' ' ~ s.artist)|urlencode }}" target="_blank" rel="noopener" title="Listen on YouTube"><i data-lucide="play-circle" class="icon-sm"></i></a>
+  </div>
+</div>
+{% endmacro %}

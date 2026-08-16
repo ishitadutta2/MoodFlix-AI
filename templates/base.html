@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}MoodFlix AI{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+{% block page_css %}{% endblock %}
+{% block extra_head %}{% endblock %}
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+</head>
+<body>
+<div class="aurora-bg" aria-hidden="true"></div>
+{% block body %}{% endblock %}
+
+<script>window.CSRF_TOKEN = {{ csrf_token|tojson }};</script>
+<script src="{{ url_for('static', filename='js/base.js') }}" defer></script>
+{% block page_js %}{% endblock %}
+</body>
+</html>

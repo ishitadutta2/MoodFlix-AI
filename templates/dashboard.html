@@ -1,0 +1,205 @@
+{% extends "app_base.html" %}
+{% import "_cards.html" as cards %}
+{% block title %}Dashboard — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">{% endblock %}
+
+{% block app_content %}
+<div class="dash-wrap">
+  <div class="dash-header">
+    <div>
+      <h1 id="dash-greeting">Welcome back, {{ user.name.split(' ')[0] if user and user.name else "User" }}</h1>
+      <p>Here's what's waiting for you today.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px;">
+      {% if today_mood %}
+      <div class="mood-meter" title="Today's mood: {{ today_mood }}">
+        <svg viewBox="0 0 100 100" width="96" height="96">
+          <defs>
+            <linearGradient id="moodMeterGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--primary)"/>
+              <stop offset="100%" stop-color="var(--accent)"/>
+            </linearGradient>
+          </defs>
+          <circle class="track" cx="50" cy="50" r="42"></circle>
+          <circle class="fill" cx="50" cy="50" r="42"
+            stroke-dasharray="{{ 264 }}"
+            stroke-dashoffset="{{ 264 - (264 * today_mood_score / 100) }}"></circle>
+        </svg>
+        <div class="center-label">{{ today_mood_emoji }}</div>
+      </div>
+      {% endif %}
+      <a href="{{ url_for('page_routes.chatbot') }}" class="btn btn-primary"><i data-lucide="plus" class="icon-sm"></i> New chat</a>
+    </div>
+  </div>
+
+  {% if today_mood %}
+  <div class="card" style="padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:12px;">
+    <span style="font-size:22px;">{{ today_mood_emoji }}</span>
+    <div>
+      <p style="font-weight:600;font-size:14px;">Today's mood: {{ today_mood|capitalize }}</p>
+      <p class="muted-2" style="font-size:12.5px;">{{ today_chat_count }} chat{{ 's' if today_chat_count != 1 else '' }} today · {{ total_favorites }} favorite{{ 's' if total_favorites != 1 else '' }} saved overall</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if total_chats > 0 %}
+  <div class="continue-card">
+    <div class="left">
+      <div class="icon-box"><i data-lucide="message-square" class="icon" style="color:var(--primary-2)"></i></div>
+      <div>
+        <p class="font-mono muted-2" style="font-size:11px;text-transform:uppercase;">Continue where you left off</p>
+        <p style="font-weight:600;">You have {{ total_chats }} chat{{ 's' if total_chats != 1 else '' }} in your history</p>
+      </div>
+    </div>
+    <a href="{{ url_for('page_routes.history') }}" class="btn btn-outline">View history <i data-lucide="chevron-right" class="icon-sm"></i></a>
+  </div>
+  {% endif %}
+
+  <div class="stat-grid">
+    <div class="card stat-tile"><b class="gradient-text">{{ total_chats }}</b><span>Total chats</span></div>
+    <div class="card stat-tile"><b class="gradient-text">{{ total_favorites }}</b><span>Favorites</span></div>
+    <div class="card stat-tile"><b class="gradient-text">{{ genres|length }}</b><span>Favorite genres</span></div>
+    <div class="card stat-tile"><b class="gradient-text">{{ favorite_movies|length + favorite_songs|length }}</b><span>Saved picks</span></div>
+  </div>
+
+  <div class="dash-section-head">
+    <h2>Recent recommendations</h2>
+    <a href="{{ url_for('page_routes.favorites') }}" style="color:var(--primary-2);font-size:13px;font-weight:600;">View favorites</a>
+  </div>
+  <div class="dash-grid">
+    {% if movies %}
+
+    {% for m in movies[:3] %}
+    {{ cards.movie_card(m) }}
+    {% endfor %}
+
+    {% else %}
+
+    <div class="card empty-card">
+        <p>No recommendations yet.</p>
+        <a href="{{ url_for('page_routes.chatbot') }}" class="btn btn-primary">
+            Start Chatting
+        </a>
+    </div>
+
+    {% endif %}
+  </div>
+
+  {% if songs or movies|length > 3 %}
+  <div class="dash-section-head"><h2>Today's daily pick</h2></div>
+  <div class="dash-grid">
+    {% if songs %}
+    {{ cards.song_card(songs[0]) }}
+    {% endif %}
+    {% if movies|length > 3 %}
+    {{ cards.movie_card(movies[3]) }}
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block app_right_panel %}
+<aside class="profile-panel">
+  <div>
+    <div class="flex items-center gap-3">
+      <img src="{{ user.profile_picture if user.profile_picture else url_for('static', filename='images/default-avatar.svg') }}"
+        alt="Avatar"
+        style="width:52px;height:52px;border-radius:999px;object-fit:cover;">
+      <div style="min-width:0;">
+        <p style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;">{{ user.name if user else "Guest User" }}</p>
+        <p class="muted-2" style="font-size:12px;">{{ user.email if user else "" }}</p>
+      </div>
+    </div>
+    <span class="chip chip-active" style="margin-top:12px;font-size:11px;">Premium User</span>
+    <a href="{{ url_for('page_routes.profile') }}" class="btn btn-outline btn-block" style="margin-top:14px;font-size:13px;"><i data-lucide="edit-2" class="icon-sm"></i> Edit Profile</a>
+  </div>
+
+  {% if genres %}
+  <div>
+    <p class="panel-heading gradient-text">Your Top Genres</p>
+    <div class="flex flex-col gap-2" style="flex-direction:row;flex-wrap:wrap;">
+      {% for g in genres %}<span class="chip">{{ g }}</span>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if artist_avatars %}
+  <div>
+    <p class="panel-heading gradient-text">Your Top Artists</p>
+    <div class="avatar-stack">
+      {% for a in artist_avatars %}<img src="{{ a }}" alt="">{% endfor %}
+      <div class="overflow">+{{ artist_overflow }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div>
+    <div class="flex justify-between items-center" style="margin-bottom:12px;">
+      <p class="panel-heading gradient-text" style="margin:0;">Favorite Movies</p>
+      <a href="{{ url_for('page_routes.favorites') }}" style="font-size:11.5px;color:var(--primary-2);font-weight:600;">View all</a>
+    </div>
+    {% for m in favorite_movies %}
+    <div class="fav-row">
+      <div class="tile mini-tile" style="background:linear-gradient(150deg,hsl({{ m.hue }} 70% 22%),hsl({{ m.hue + 40 }} 65% 12%));"><i data-lucide="film" class="icon-sm"></i></div>
+      <div class="titles"><p>{{ m.title }}</p></div>
+      <i data-lucide="heart" class="icon-sm" fill="var(--primary)" style="color:var(--primary)"></i>
+    </div>
+    {% else %}
+    <p class="muted-2" style="font-size:12.5px;">No favorite movies yet.</p>
+    {% endfor %}
+  </div>
+
+  <div>
+    <div class="flex justify-between items-center" style="margin-bottom:12px;">
+      <p class="panel-heading gradient-text" style="margin:0;">Favorite Songs</p>
+      <a href="{{ url_for('page_routes.favorites') }}" style="font-size:11.5px;color:var(--primary-2);font-weight:600;">View all</a>
+    </div>
+    {% for s in favorite_songs %}
+    <div class="fav-row">
+      {% set hue = s.get('hue', 220) | int %}
+      {% set hue2 = hue + 40 %}
+
+      <div class="tile mini-tile"
+          style="background:linear-gradient(
+              150deg,
+              hsl({{ hue }} 70% 22%),
+              hsl({{ hue2 }} 65% 12%)
+          );">
+          <i data-lucide="music-2" class="icon-sm"></i>
+      </div>
+      <div class="titles"><p>{{ s.title }}</p><span>{{ s.artist }}</span></div>
+      <i data-lucide="heart" class="icon-sm" fill="var(--primary)" style="color:var(--primary)"></i>
+    </div>
+    {% else %}
+    <p class="muted-2" style="font-size:12.5px;">No favorite songs yet.</p>
+    {% endfor %}
+  </div>
+
+  <div>
+    <p class="panel-heading">Chat Stats</p>
+    <div class="panel-stats">
+      <div class="card panel-stat"><b>{{ total_chats }}</b><span>Chats</span></div>
+      <div class="card panel-stat"><b>{{ favorite_movies|length }}</b><span>Fav. movies</span></div>
+      <div class="card panel-stat"><b>{{ favorite_songs|length }}</b><span>Fav. songs</span></div>
+    </div>
+  </div>
+
+  {% if chat_groups and chat_groups[0].chats %}
+  <div>
+    <p class="panel-heading">Recent Activity</p>
+    <div class="recent-timeline">
+      {% for c in chat_groups[0].chats[:5] %}
+      <a href="{{ url_for('page_routes.chatbot', chat_id=c.id) }}" class="timeline-item">
+        <span class="timeline-dot"></span>
+        <div>
+          <p>{{ c.title }}</p>
+          <span class="muted-2">{{ c.updated_at.strftime('%b %d, %I:%M %p') if c.updated_at else '' }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</aside>
+{% endblock %}

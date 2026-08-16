@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="app-shell" data-theme="dark">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon"><i data-lucide="sparkles" class="icon" style="color:#fff"></i></div>
+      <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:17px;">MoodFlix <span class="gradient-text">AI</span></span>
+    </div>
+
+    <div class="sidebar-section">
+      <a href="{{ url_for('page_routes.chatbot') }}" class="btn btn-primary btn-block"><i data-lucide="plus" class="icon-sm"></i> New Chat</a>
+    </div>
+
+    <div class="sidebar-section">
+      <input class="input" id="chat-search" placeholder="Search chats...">
+    </div>
+
+    <nav class="sidebar-section" style="flex:1;">
+      {% for group in (chat_groups or []) %}
+      <p class="sidebar-group-label">{{ group.label }}</p>
+      {% for c in group.chats %}
+      <a class="sidebar-link chat-row" href="{{ url_for('page_routes.chatbot', chat_id=c.id) }}" data-title="{{ c.title|lower }}">
+        <i data-lucide="message-square" class="icon-sm"></i><span>{{ c.title }}</span>
+      </a>
+      {% endfor %}
+      {% endfor %}
+    </nav>
+
+    <div class="sidebar-footer">
+      <a data-nav-link href="{{ url_for('page_routes.dashboard') }}" class="sidebar-link {{ 'active' if active_page=='dashboard' }}"><i data-lucide="home" class="icon-sm"></i>Dashboard</a>
+      <a data-nav-link href="{{ url_for('page_routes.chatbot') }}" class="sidebar-link {{ 'active' if active_page=='chatbot' }}"><i data-lucide="message-square" class="icon-sm"></i>Chat</a>
+      <a data-nav-link href="{{ url_for('page_routes.history') }}" class="sidebar-link {{ 'active' if active_page=='history' }}"><i data-lucide="history" class="icon-sm"></i>Chat History</a>
+      <a data-nav-link href="{{ url_for('page_routes.favorites') }}" class="sidebar-link {{ 'active' if active_page=='favorites' }}"><i data-lucide="heart" class="icon-sm"></i>Favorites</a>
+      <a data-nav-link href="{{ url_for('page_routes.search') }}" class="sidebar-link {{ 'active' if active_page=='search' }}"><i data-lucide="search" class="icon-sm"></i>Search</a>
+      <a data-nav-link href="{{ url_for('page_routes.analytics') }}" class="sidebar-link {{ 'active' if active_page=='analytics' }}"><i data-lucide="bar-chart-3" class="icon-sm"></i>Analytics</a>
+      <a data-nav-link href="{{ url_for('page_routes.mood_calendar') }}" class="sidebar-link {{ 'active' if active_page=='mood_calendar' }}"><i data-lucide="calendar-heart" class="icon-sm"></i>Mood Calendar</a>
+      <a data-nav-link href="{{ url_for('page_routes.profile') }}" class="sidebar-link {{ 'active' if active_page=='profile' }}"><i data-lucide="user" class="icon-sm"></i>Profile</a>
+      <a data-nav-link href="{{ url_for('page_routes.settings') }}" class="sidebar-link {{ 'active' if active_page=='settings' }}"><i data-lucide="settings" class="icon-sm"></i>Settings</a>
+      <a href="#" id="logout-link" class="sidebar-link"><i data-lucide="log-out" class="icon-sm"></i>Logout</a>
+      <p class="font-mono muted-2" style="font-size:10.5px;padding:10px 12px 0;">MoodFlix AI v{{ app_version }}</p>
+    </div>
+  </aside>
+
+  <div class="main-col">
+    <div class="mobile-topbar">
+      <button class="btn btn-ghost btn-icon" data-sidebar-open><i data-lucide="menu" class="icon"></i></button>
+      <span style="font-family:'Sora',sans-serif;font-weight:700;">MoodFlix <span class="gradient-text">AI</span></span>
+      <img src="{{ user.profile_picture if user and user.profile_picture else url_for('static', filename='images/default-avatar.svg') }}" alt="" style="width:30px;height:30px;border-radius:999px;object-fit:cover;">
+    </div>
+
+    <div class="app-body-row">
+      <div class="app-body-main">
+        {% block app_content %}{% endblock %}
+      </div>
+      {% block app_right_panel %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

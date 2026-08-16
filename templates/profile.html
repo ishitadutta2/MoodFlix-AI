@@ -1,0 +1,105 @@
+{% extends "app_base.html" %}
+{% block title %}Profile — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/app_pages.css') }}">{% endblock %}
+
+{% block app_content %}
+<div class="page-wrap">
+  <div class="page-header">
+    <div>
+      <h1>Profile</h1>
+      <p>Manage your info and taste preferences.</p>
+    </div>
+  </div>
+
+  <div class="card profile-header-card">
+    <div class="profile-avatar-wrap">
+      <img id="profile-avatar-img" src="{{ user.profile_picture if user.profile_picture else url_for('static', filename='images/default-avatar.svg') }}" alt="">
+      <label class="avatar-upload-btn" for="avatar-input" title="Change photo">
+        <i data-lucide="camera" class="icon-sm" style="color:#fff;width:14px;height:14px;"></i>
+      </label>
+      <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;">
+    </div>
+    <div>
+      <p style="font-family:'Sora',sans-serif;font-weight:700;font-size:18px;">{{ user.name }}</p>
+      <p class="muted-2" style="font-size:13px;">{{ user.email }}</p>
+    </div>
+  </div>
+
+  <div class="card profile-section">
+    <h3>Basic info</h3>
+    <p class="section-desc">Your name and a short bio.</p>
+    <form id="basic-info-form">
+      <div class="form-row">
+        <div class="field">
+          <label for="name-input">Name</label>
+          <input class="input" id="name-input" value="{{ user.name }}" maxlength="100">
+        </div>
+      </div>
+      <div class="field">
+        <label for="bio-input">Bio</label>
+        <textarea class="input" id="bio-input" rows="3" maxlength="500">{{ user.bio or "" }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+      <p class="form-msg" id="basic-info-msg"></p>
+    </form>
+  </div>
+
+  <div class="card profile-section">
+    <h3>Taste preferences</h3>
+    <p class="section-desc">Helps MoodFlix AI tailor recommendations to you.</p>
+
+    <div class="field">
+      <label>Favorite genres</label>
+      <div class="tag-input-list" id="genres-list" data-field="favorite_genres"></div>
+      <input class="input tag-add-input" data-field="favorite_genres" placeholder="Add a genre and press Enter">
+    </div>
+
+    <div class="field">
+      <label>Favorite languages</label>
+      <div class="tag-input-list" id="languages-list" data-field="favorite_languages"></div>
+      <input class="input tag-add-input" data-field="favorite_languages" placeholder="Add a language and press Enter">
+    </div>
+
+    <div class="field">
+      <label>Favorite artists</label>
+      <div class="tag-input-list" id="artists-list" data-field="favorite_artists"></div>
+      <input class="input tag-add-input" data-field="favorite_artists" placeholder="Add an artist and press Enter">
+    </div>
+
+    <div class="field">
+      <label>Favorite actors</label>
+      <div class="tag-input-list" id="actors-list" data-field="favorite_actors"></div>
+      <input class="input tag-add-input" data-field="favorite_actors" placeholder="Add an actor and press Enter">
+    </div>
+
+    <p class="form-msg" id="prefs-msg"></p>
+  </div>
+
+  <div class="card profile-section">
+    <h3>Change password</h3>
+    <p class="section-desc">Use a password that's at least 8 characters, with a mix of letters and numbers.</p>
+    <form id="password-form">
+      <div class="form-row">
+        <div class="field">
+          <label for="current-password">Current password</label>
+          <input class="input" type="password" id="current-password" autocomplete="current-password">
+        </div>
+        <div class="field">
+          <label for="new-password">New password</label>
+          <input class="input" type="password" id="new-password" autocomplete="new-password">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline">Update password</button>
+      <p class="form-msg" id="password-msg"></p>
+    </form>
+  </div>
+
+  <div class="card profile-section danger-zone">
+    <h3>Delete account</h3>
+    <p class="section-desc">Permanently deletes your account, chats, and favorites. This can't be undone.</p>
+    <button class="btn btn-outline" id="delete-account-btn" style="border-color:#ef4444;color:#f87171;">Delete my account</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/profile.js') }}" defer></script>{% endblock %}

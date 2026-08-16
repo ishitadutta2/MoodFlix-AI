@@ -1,0 +1,112 @@
+/* ============================================================
+   landing.css — marketing homepage
+============================================================ */
+.landing{ position:relative; overflow:hidden; }
+
+.landing-nav{ position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid var(--border); }
+.landing-nav .links{ display:flex; align-items:center; gap:32px; font-size:14px; font-weight:500; color:var(--muted); }
+.landing-nav .links a:hover{ color:var(--text); }
+.brand-lockup{ display:flex; align-items:center; gap:10px; }
+.brand-lockup .brand-icon{ width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; }
+.brand-lockup span{ font-family:'Sora',sans-serif; font-weight:700; font-size:18px; }
+
+.hero{ position:relative; z-index:10; max-width:1100px; margin:0 auto; padding:96px 24px; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+@media (max-width:860px){ .hero{ grid-template-columns:1fr; padding:56px 24px; } }
+.hero h1{ font-size:clamp(2.2rem,5vw,3.4rem); line-height:1.08; letter-spacing:-0.02em; font-weight:800; margin-top:20px; }
+.hero p.lead{ color:var(--muted); margin-top:20px; font-size:17px; line-height:1.6; max-width:440px; }
+.hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+.hero-stats{ display:flex; gap:28px; margin-top:36px; }
+.hero-stats .stat b{ display:block; font-family:'Sora',sans-serif; font-size:19px; }
+.hero-stats .stat span{ font-size:12px; color:var(--muted-2); }
+
+.mock-window{ position:relative; border-radius:18px; padding:20px; box-shadow:var(--shadow); }
+.mock-dots{ display:flex; gap:6px; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border); margin-bottom:16px; }
+.mock-dots span{ width:10px; height:10px; border-radius:999px; }
+.mock-bubble{ border-radius:16px; padding:14px; font-size:14px; max-width:85%; margin-bottom:12px; }
+.mock-bubble.ai{ background:var(--surface-2); border-top-left-radius:4px; }
+.mock-bubble.user{ background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; margin-left:auto; border-top-right-radius:4px; max-width:75%; }
+.mock-pair{ display:flex; gap:8px; margin-top:8px; }
+.mock-pair .card{ flex:1; display:flex; align-items:center; gap:8px; padding:8px; }
+
+.section{ position:relative; z-index:10; max-width:1100px; margin:0 auto; padding:80px 24px; }
+.section-soft{ background:var(--bg-soft); max-width:none; }
+.section-soft > .inner{ max-width:900px; margin:0 auto; }
+.eyebrow{ text-align:center; text-transform:uppercase; letter-spacing:.12em; font-size:12px; color:var(--muted-2); }
+.section h2{ text-align:center; font-size:clamp(1.6rem,3vw,2.2rem); margin-top:12px; }
+
+.feature-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:48px; }
+@media (max-width:900px){ .feature-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:520px){ .feature-grid{ grid-template-columns:1fr; } }
+.feature-card{ padding:20px; }
+.feature-card .ic{ width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(56,189,248,.15)); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.feature-card h3{ font-size:14px; margin-bottom:6px; }
+.feature-card p{ font-size:14px; color:var(--muted); line-height:1.55; }
+
+.steps{ display:flex; flex-direction:column; gap:0; margin-top:56px; }
+.step{ display:flex; gap:20px; padding-bottom:32px; border-bottom:1px solid var(--border); }
+.step:last-child{ border-bottom:none; }
+.step .n{ font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:26px; opacity:.7; }
+.step h3{ font-size:16px; margin-bottom:4px; }
+.step p{ font-size:14px; color:var(--muted); }
+
+.faq-item{ padding:16px; cursor:pointer; }
+.faq-item .q{ display:flex; justify-content:space-between; align-items:center; font-weight:500; font-size:14px; }
+.faq-item .a{ font-size:14px; color:var(--muted); margin-top:12px; line-height:1.6; display:none; }
+.faq-item.open .a{ display:block; }
+.faq-item.open .chev{ transform:rotate(180deg); }
+.chev{ transition:transform .2s ease; }
+
+.cta-section{ text-align:center; padding:80px 24px; position:relative; z-index:10; }
+.cta-section h2{ font-size:clamp(1.6rem,3.5vw,2.4rem); }
+.cta-section .btn{ margin-top:28px; }
+
+.landing-footer{ position:relative; z-index:10; padding:32px 24px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; border-top:1px solid var(--border); }
+.landing-footer .links{ display:flex; gap:24px; font-size:14px; color:var(--muted); }
+
+/* Floating particle decorations (hero) */
+.float-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.float-particles .particle {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0.35;
+  animation: float-up 14s linear infinite;
+  filter: blur(0.2px);
+}
+
+.p1 { left: 8%;  top: 100%; animation-delay: 0s;   font-size: 26px; }
+.p2 { left: 22%; top: 100%; animation-delay: 3s;   font-size: 30px; }
+.p3 { left: 55%; top: 100%; animation-delay: 6s;   font-size: 20px; }
+.p4 { left: 75%; top: 100%; animation-delay: 2s;   font-size: 24px; }
+.p5 { left: 90%; top: 100%; animation-delay: 8s;   font-size: 22px; }
+
+@keyframes float-up {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.35; }
+  90%  { opacity: 0.35; }
+  100% { transform: translateY(-100vh) rotate(20deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-particles .particle { animation: none; opacity: 0.15; }
+}
+
+/* Subtle mouse parallax on the hero mock window (see landing.js) */
+[data-parallax] {
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+/* Mobile responsiveness pass */
+@media (max-width: 720px) {
+  .landing-nav .links { display: none; }
+  .landing-nav { padding: 16px; }
+  .hero-stats { flex-wrap: wrap; gap: 18px; }
+  .mock-window { max-width: 100%; }
+}

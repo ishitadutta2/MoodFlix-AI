@@ -1,0 +1,27 @@
+{% extends "app_base.html" %}
+{% block title %}Search — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/app_pages.css') }}">{% endblock %}
+
+{% block app_content %}
+<div class="page-wrap">
+  <div class="page-header">
+    <div>
+      <h1>Search</h1>
+      <p>Search your chats, messages, and favorites.</p>
+    </div>
+  </div>
+
+  <div class="field">
+    <input class="input" id="global-search-input" placeholder="Search everything..." autofocus>
+  </div>
+
+  <div id="search-results">
+    <div class="page-empty">
+      <i data-lucide="search" style="width:32px;height:32px;"></i>
+      <p>Start typing to search.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/search.js') }}" defer></script>{% endblock %}

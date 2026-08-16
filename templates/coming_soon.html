@@ -1,0 +1,22 @@
+{% extends "app_base.html" if in_shell else "base.html" %}
+{% block title %}{{ page_title }} — MoodFlix AI{% endblock %}
+
+{% block app_content %}
+<div style="padding:60px 32px; text-align:center; max-width:520px; margin:0 auto;">
+  <i data-lucide="hammer" class="icon" style="width:32px;height:32px;color:var(--primary-2);margin-bottom:16px;"></i>
+  <h1 style="font-size:20px;">{{ page_title }} is on its way</h1>
+  <p class="muted" style="margin-top:10px;font-size:14px;">This page hasn't been built yet — check back soon.</p>
+  <a href="{{ url_for('page_routes.dashboard') }}" class="btn btn-primary" style="margin-top:20px;">Back to dashboard</a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;">
+  <div class="card" style="padding:40px;text-align:center;max-width:420px;">
+    <i data-lucide="hammer" class="icon" style="width:32px;height:32px;color:var(--primary-2);margin-bottom:16px;"></i>
+    <h1 style="font-size:20px;">{{ page_title }} is on its way</h1>
+    <p class="muted" style="margin-top:10px;font-size:14px;">This page hasn't been built yet — check back soon.</p>
+    <a href="{{ url_for('page_routes.home') }}" class="btn btn-primary" style="margin-top:20px;">Back to home</a>
+  </div>
+</div>
+{% endblock %}

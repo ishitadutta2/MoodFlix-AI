@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_ENV: production
+      SECRET_KEY: ${SECRET_KEY:-change-this-secret-key}
+      MONGODB_URI: mongodb://mongo:27017
+      MONGODB_DB: moodflix
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+    depends_on:
+      - mongo
+    volumes:
+      - avatars:/app/static/uploads
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+  avatars:

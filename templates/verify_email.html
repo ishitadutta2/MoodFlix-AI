@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Verify Email — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">{% endblock %}
+
+{% block body %}
+<div class="auth-page">
+  <div class="orb" style="width:380px;height:380px;top:-100px;left:-100px;"></div>
+  <div class="orb" style="width:340px;height:340px;bottom:-140px;right:-100px;opacity:.35;"></div>
+
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div class="flex items-center gap-2">
+        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;"><i data-lucide="sparkles" class="icon" style="color:#fff"></i></div>
+        <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:18px;">MoodFlix <span class="gradient-text">AI</span></span>
+      </div>
+    </div>
+
+    <div class="auth-card glass" style="text-align:center;">
+      {% if ok %}
+      <i data-lucide="check-circle-2" style="width:40px;height:40px;color:#4ade80;margin-bottom:12px;"></i>
+      <h1>Email verified</h1>
+      <p>Your account is confirmed. You're all set.</p>
+      {% else %}
+      <i data-lucide="alert-triangle" style="width:40px;height:40px;color:#f87171;margin-bottom:12px;"></i>
+      <h1>Couldn't verify</h1>
+      <p>{{ error }}</p>
+      {% endif %}
+      <a href="{{ url_for('page_routes.dashboard') }}" class="btn btn-primary btn-block" style="margin-top:20px;">Go to dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

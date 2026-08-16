@@ -1,0 +1,347 @@
+/* ============================================================
+   MoodFlix AI — base.css
+   Shared design tokens + reusable components for every page.
+   Loaded on every template BEFORE the page-specific stylesheet.
+============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#050816; --bg-soft:#0B1026; --surface:rgba(17,24,39,0.7); --surface-solid:#111827;
+  --surface-2:#161F35; --border:rgba(255,255,255,0.08); --border-strong:rgba(255,255,255,0.16);
+  --text:#F8FAFC; --muted:#94A3B8; --muted-2:#64748B;
+  --primary:#7C3AED; --primary-2:#A855F7; --primary-dark:#5B21B6; --accent:#06B6D4;
+  --success:#22C55E; --danger:#EF4444; --warning:#FBBF24;
+  --shadow:0 8px 30px rgba(0,0,0,0.45);
+  --radius-sm:8px; --radius-md:12px; --radius-lg:18px; --radius-xl:20px;
+  --space-sm:12px; --space-md:24px; --space-lg:32px;
+  --glow-primary:0 0 24px rgba(124,58,237,0.45);
+  --glow-accent:0 0 24px rgba(6,182,212,0.4);
+}
+[data-theme="light"]{
+  --bg:#F5F3FB; --bg-soft:#EFECFA; --surface:rgba(255,255,255,0.75); --surface-solid:#FFFFFF;
+  --surface-2:#EDEAF8; --border:rgba(20,10,50,0.08); --border-strong:rgba(20,10,50,0.14);
+  --text:#1B1730; --muted:#635E82; --muted-2:#8A85A8;
+  --primary:#7C3AED; --primary-2:#8B5CF6; --primary-dark:#6425C9; --accent:#0EA5E9;
+  --success:#16A34A; --danger:#DC2626; --warning:#D97706;
+  --shadow:0 8px 24px rgba(80,60,150,0.12);
+  --glow-primary:0 0 20px rgba(124,58,237,0.22);
+  --glow-accent:0 0 20px rgba(14,165,233,0.18);
+}
+
+*, *::before, *::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text);
+  transition:background .2s ease, color .2s ease; min-height:100vh;
+}
+h1,h2,h3,h4{ font-family:'Sora',sans-serif; margin:0; }
+p{ margin:0; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; margin:0; padding:0; }
+button, input, textarea{ font-family:inherit; }
+img{ max-width:100%; display:block; }
+.font-mono{ font-family:'IBM Plex Mono',monospace; }
+.container{ max-width:1180px; margin:0 auto; padding:0 24px; }
+.gradient-text{
+  background:linear-gradient(100deg,var(--primary-2),var(--accent));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.muted{ color:var(--muted); }
+.muted-2{ color:var(--muted-2); }
+
+/* ---------- ambient mood orb (signature element) ---------- */
+.orb{
+  position:absolute; border-radius:999px; filter:blur(70px); opacity:.55;
+  background:conic-gradient(from 180deg, var(--primary), var(--accent), var(--primary-2), var(--primary));
+  animation:mf-spin 16s linear infinite, mf-pulse 7s ease-in-out infinite;
+  pointer-events:none; z-index:0;
+}
+@keyframes mf-spin{ to{ transform:rotate(360deg); } }
+@keyframes mf-pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.12); } }
+@media (prefers-reduced-motion: reduce){ .orb{ animation:none; } }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-weight:600; font-size:14px; padding:11px 20px; border-radius:var(--radius-md);
+  cursor:pointer; transition:all .18s ease; border:1px solid transparent; white-space:nowrap;
+}
+.btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.btn svg{ width:16px; height:16px; }
+.btn-primary{ background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; box-shadow:0 6px 20px rgba(124,58,237,.4); }
+.btn-primary:hover{ filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 10px 28px rgba(124,58,237,.55), var(--glow-primary); }
+.btn-ghost{ background:var(--surface-2); color:var(--text); border-color:var(--border); }
+.btn-ghost:hover{ border-color:var(--border-strong); }
+.btn-outline{ background:transparent; border-color:var(--border-strong); color:var(--text); }
+.btn-outline:hover{ background:var(--surface-2); }
+.btn-icon{ padding:9px; border-radius:10px; }
+.btn-block{ width:100%; }
+
+/* ---------- surfaces ---------- */
+.glass{ background:var(--surface); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--border); }
+.card{ background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-lg); transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease; }
+.card:hover{ border-color:var(--border-strong); transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,.35); }
+@media (prefers-reduced-motion: reduce){ .card{ transition:none; } .card:hover{ transform:none; } }
+
+/* ---------- form elements ---------- */
+.field{ margin-bottom:14px; }
+.field label{ display:block; font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:6px; }
+.input, textarea.input{
+  width:100%; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-md);
+  padding:12px 14px; color:var(--text); font-size:14px; transition:border-color .15s ease;
+}
+.input::placeholder{ color:var(--muted-2); }
+.input:focus{ outline:none; border-color:var(--primary); }
+
+/* ---------- chips ---------- */
+.chip{ display:inline-flex; align-items:center; gap:5px; padding:6px 13px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); font-size:12.5px; font-weight:500; }
+.chip-active{ background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; border-color:transparent; }
+[data-theme-option].theme-active{ border-color:var(--primary); box-shadow:0 0 0 1px var(--primary) inset; }
+
+/* ---------- icons (inline svg sizing helper) ---------- */
+.icon{ width:18px; height:18px; stroke-width:2; flex-shrink:0; }
+.icon-sm{ width:14px; height:14px; }
+
+/* ---------- poster / cover placeholder tiles ---------- */
+.tile{ border-radius:12px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.55); }
+
+/* ---------- shared recommendation cards (dashboard / chatbot / favorites) ---------- */
+.rec-card{ padding:var(--space-sm); display:flex; flex-direction:column; gap:12px; height:100%; }
+.rec-card .top{ display:flex; gap:12px; }
+.rec-card .poster{ width:64px; height:88px; flex-shrink:0; }
+.rec-card h4{ font-size:13.5px; font-weight:600; }
+.rec-card .meta{ font-size:12px; color:var(--muted); margin-top:4px; }
+.rec-card .desc{ font-size:12.5px; margin-top:8px; opacity:.85; line-height:1.5; }
+.rec-card .rating{ display:flex; align-items:center; gap:4px; margin-top:8px; font-size:12px; color:var(--muted); }
+.rec-card .why-btn{ font-size:12px; justify-content:flex-start; padding:7px 12px; }
+.rec-card .why-text{ font-size:12px; color:var(--muted); padding:0 2px; line-height:1.5; }
+
+.song-card{ padding:var(--space-sm); display:flex; flex-direction:column; gap:10px; height:100%; }
+.song-card .top{ display:flex; align-items:center; gap:12px; }
+.song-card .cover{ width:56px; height:56px; flex-shrink:0; }
+.song-card h4{ font-size:13.5px; font-weight:600; }
+.song-card .artist{ font-size:12px; color:var(--muted); }
+.song-card .meta{ font-size:11px; color:var(--muted-2); margin-top:2px; }
+.song-card .desc{ font-size:12.5px; opacity:.8; line-height:1.5; }
+
+.fav-btn{ background:none; border:none; cursor:pointer; padding:4px; }
+
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar{ width:8px; height:8px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:var(--border-strong); border-radius:8px; }
+
+/* ---------- utility ---------- */
+.flex{ display:flex; } .flex-col{ flex-direction:column; }
+.items-center{ align-items:center; } .justify-between{ justify-content:space-between; }
+.gap-1{ gap:4px; } .gap-2{ gap:8px; } .gap-3{ gap:12px; } .gap-4{ gap:16px; }
+.hidden{ display:none !important; }
+.fade-in{ animation:fadeIn .4s ease both; }
+@keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+/* ---------- app shell: sidebar layout used by dashboard/chatbot/history/favorites/profile/settings ---------- */
+.app-shell{ display:flex; min-height:100vh; }
+.sidebar{
+  width:272px; flex-shrink:0; background:var(--surface-solid); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto; z-index:30;
+}
+.sidebar .brand{ display:flex; align-items:center; gap:10px; padding:16px; }
+.sidebar .brand-icon{ width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; }
+.sidebar-section{ padding:0 12px; margin-top:14px; }
+.sidebar-group-label{ font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); padding:0 12px 6px; font-family:'IBM Plex Mono',monospace; }
+.sidebar-link{
+  display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:10px; color:var(--muted);
+  font-size:14px; font-weight:500; cursor:pointer; transition:all .15s ease; margin-bottom:2px;
+}
+.sidebar-link:hover{ background:var(--surface-2); color:var(--text); }
+.sidebar-link.active{ background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(56,189,248,.12)); color:var(--text); border:1px solid var(--border-strong); }
+.sidebar-footer{ margin-top:auto; padding:12px; border-top:1px solid var(--border); }
+.main-col{ flex:1; min-width:0; }
+.mobile-topbar{ display:none; }
+
+/* body row: main content + optional right panel that self-adjusts by wrapping
+   instead of being hidden at a hard breakpoint */
+.app-body-row{ display:flex; flex-wrap:wrap; align-items:flex-start; }
+.app-body-main{ flex:3 1 480px; min-width:0; }
+.profile-panel{
+  flex:1 1 280px; max-width:320px; border-left:1px solid var(--border);
+  padding:20px; display:flex; flex-direction:column; gap:24px;
+}
+@media (max-width: 1100px){
+  .profile-panel{ max-width:100%; border-left:none; border-top:1px solid var(--border); flex-basis:100%; }
+}
+
+
+@media (max-width: 860px){
+  .sidebar{ position:fixed; left:0; transform:translateX(-100%); transition:transform .2s ease; box-shadow:var(--shadow); }
+  .sidebar.open{ transform:translateX(0); }
+  .mobile-topbar{ display:flex; align-items:center; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border); background:var(--surface-solid); position:sticky; top:0; z-index:20; }
+}
+
+/* Toast notifications (see base.js toast()) */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Feedback / trailer-link row on recommendation cards */
+.card-actions-row {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.feedback-btn.active[data-reaction="loved"] {
+  color: #4ade80;
+  border-color: #4ade80;
+}
+
+.feedback-btn.active[data-reaction="disliked"] {
+  color: #f87171;
+  border-color: #f87171;
+}
+
+/* Skeleton loaders (used while history/favorites/search/dashboard data loads) */
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.06) 25%,
+    rgba(255,255,255,0.12) 37%,
+    rgba(255,255,255,0.06) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  border-radius: 10px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+}
+
+.skeleton-row { height: 62px; margin-bottom: 10px; }
+.skeleton-card { height: 200px; }
+
+/* ============================================================
+   Sci-fi theme effects: aurora bg, holographic borders, glow,
+   page transitions, equal-height card grids.
+============================================================ */
+
+/* Aurora ambient background wash — subtle, sits behind content */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -10%, rgba(124,58,237,0.16), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(6,182,212,0.13), transparent 60%),
+    radial-gradient(ellipse 600px 500px at 50% 110%, rgba(168,85,247,0.10), transparent 60%);
+  animation: aurora-drift 20s ease-in-out infinite alternate;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(-2%,1%,0) scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) { .aurora-bg { animation: none; } }
+
+/* Holographic animated-gradient border — used on AI recommendation cards */
+.holographic-border {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+.holographic-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background: linear-gradient(115deg, var(--primary), var(--accent), var(--primary-2), var(--primary));
+  background-size: 300% 300%;
+  animation: holo-shift 6s ease infinite;
+  opacity: 0.55;
+}
+@keyframes holo-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .holographic-border::before { animation: none; } }
+
+/* Glow-on-hover for icon buttons */
+.icon-glow:hover, .btn-icon:hover {
+  filter: drop-shadow(0 0 6px rgba(124,58,237,0.55));
+}
+
+/* Smooth 300ms page-enter transition (see base.js applyPageTransition) */
+body.page-transition-ready {
+  animation: page-fade-in 0.3s ease both;
+}
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { body.page-transition-ready { animation: none; } }
+
+/* Equal-height cards in a grid (used with display:grid parents) */
+.equal-height-grid {
+  display: grid;
+  align-items: stretch;
+}
+.equal-height-grid > * {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Quick mood chips (chatbot quick-select) */
+.mood-chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0 0 12px;
+}
+.mood-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.mood-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: var(--glow-primary);
+}
+
+/* Circular mood meter (dashboard) */
+.mood-meter {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+.mood-meter svg { transform: rotate(-90deg); }
+.mood-meter .track { fill: none; stroke: var(--surface-2); stroke-width: 8; }
+.mood-meter .fill {
+  fill: none;
+  stroke: url(#moodMeterGradient);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+.mood-meter .center-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}

@@ -1,0 +1,48 @@
+{% extends "app_base.html" %}
+{% block title %}Analytics — MoodFlix AI{% endblock %}
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app_pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+{% endblock %}
+
+{% block app_content %}
+<div class="page-wrap">
+  <div class="page-header">
+    <div>
+      <h1>Analytics</h1>
+      <p>Your usage at a glance. All numbers below come from your real activity.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid" id="analytics-stats">
+    <div class="card stat-tile"><b class="gradient-text">—</b><span>Chats this week</span></div>
+    <div class="card stat-tile"><b class="gradient-text">—</b><span>Favorite genre</span></div>
+    <div class="card stat-tile"><b class="gradient-text">—</b><span>Most active mood</span></div>
+    <div class="card stat-tile"><b class="gradient-text">—</b><span>Avg. messages / chat</span></div>
+  </div>
+
+  <div class="card profile-section" style="margin-top:20px;">
+    <h3>Recommendation performance</h3>
+    <p class="section-desc">Based on "Loved it" feedback out of all recommendation slots shown. Approximate — not a precision metric.</p>
+    <div id="acceptance-bar-wrap" style="background:var(--surface-2,rgba(255,255,255,0.06));border-radius:999px;height:12px;overflow:hidden;">
+      <div id="acceptance-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .4s;"></div>
+    </div>
+    <p class="muted-2" id="acceptance-label" style="margin-top:8px;font-size:12.5px;"></p>
+  </div>
+
+  <div class="card profile-section">
+    <h3>Mood trend</h3>
+    <p class="section-desc">Detected mood across your chats (keyword-based, not a clinical assessment).</p>
+    <div id="mood-bars"></div>
+  </div>
+
+  <div class="card profile-section">
+    <h3>Trending across MoodFlix AI</h3>
+    <p class="section-desc">Most-favorited titles across all users — a community signal, not external chart data.</p>
+    <div id="trending-list" class="history-list"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/analytics.js') }}" defer></script>{% endblock %}

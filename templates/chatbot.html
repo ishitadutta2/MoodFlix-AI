@@ -1,0 +1,92 @@
+{% extends "app_base.html" %}
+{% import "_cards.html" as cards %}
+{% block title %}Chat — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">{% endblock %}
+{% block extra_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.min.js" defer></script>
+{% endblock %}
+
+{% block app_content %}
+<div class="chat-page">
+  <div class="chat-topbar">
+    <div>
+      <h1>{{ chat.title if chat else "New Chat" }}</h1>
+      <p class="ts font-mono">{{ chat.updated_at.strftime('%b %d, %Y · %I:%M %p') if chat and chat.updated_at else "Just now" }}</p>
+    </div>
+    <img src="{{ user.profile_picture if user and user.profile_picture else url_for('static', filename='images/default-avatar.svg') }}" alt="" style="width:34px;height:34px;border-radius:999px;object-fit:cover;">
+  </div>
+
+  <div class="chat-scroll" id="chat-scroll">
+    {% if initial_messages %}
+      {% for m in initial_messages %}
+        {% if m.sender == "user" %}
+        <div class="msg-row user fade-in">
+          <div class="msg-line">
+            <div class="bubble user">{{ m.message }}</div>
+          </div>
+        </div>
+        {% else %}
+        <div class="msg-row fade-in">
+          <div class="msg-line">
+            <div class="msg-avatar"><i data-lucide="sparkles" class="icon-sm" style="color:#fff"></i></div>
+            <div class="bubble ai" data-role="reply-text" data-full-text="{{ m.message }}">{{ m.message }}</div>
+          </div>
+          {% if m.movies or m.songs %}
+          <div class="recs-wrap">
+            {% if m.movies %}
+            <div>
+              <p class="recs-label">Movie recommendations</p>
+              <div class="recs-grid">
+                {% for mv in m.movies %}{{ cards.movie_card(mv) }}{% endfor %}
+              </div>
+            </div>
+            {% endif %}
+            {% if m.songs %}
+            <div>
+              <p class="recs-label">Song recommendations</p>
+              <div class="recs-grid">
+                {% for sg in m.songs %}{{ cards.song_card(sg) }}{% endfor %}
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="msg-actions">
+            <button class="btn btn-ghost btn-icon copy-btn" title="Copy"><i data-lucide="copy" class="icon-sm"></i></button>
+            <button class="btn btn-ghost btn-icon continue-btn" title="Continue"><i data-lucide="chevrons-right" class="icon-sm"></i></button>
+            <button class="btn btn-ghost btn-icon share-btn" title="Share"><i data-lucide="share-2" class="icon-sm"></i></button>
+            <span class="msg-timestamp">{{ m.created_at.strftime('%I:%M %p') if m.created_at else "" }}</span>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+    <div class="msg-row fade-in">
+      <div class="msg-line">
+        <div class="msg-avatar"><i data-lucide="sparkles" class="icon-sm" style="color:#fff"></i></div>
+        <div class="bubble ai">Hi {{ user.name.split(' ')[0] if user and user.name else "there" }}! 👋 I'm MoodFlix AI, your entertainment companion. How are you feeling today?</div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="chat-input-bar">
+    <div class="mood-chip-row" id="mood-chip-row" style="max-width:900px;margin:0 auto;">
+      <button class="mood-chip" type="button" data-mood-text="I'm feeling happy today, recommend something upbeat">😊 Happy</button>
+      <button class="mood-chip" type="button" data-mood-text="I'm feeling a bit sad, recommend something comforting">😔 Sad</button>
+      <button class="mood-chip" type="button" data-mood-text="I want to relax, recommend something calm">😌 Relaxed</button>
+      <button class="mood-chip" type="button" data-mood-text="I'm feeling excited, recommend something thrilling">😎 Excited</button>
+    </div>
+    <div class="chat-input-row">
+      <input class="input" id="chat-input" placeholder="Message MoodFlix AI...">
+      <button class="btn btn-outline btn-icon" id="mic-btn" title="Voice input" style="display:none;"><i data-lucide="mic" class="icon"></i></button>
+      <button class="btn btn-outline btn-icon" id="stop-btn" title="Stop generating" style="display:none;"><i data-lucide="square" class="icon"></i></button>
+      <button class="btn btn-primary btn-icon" id="chat-send"><i data-lucide="send" class="icon"></i></button>
+    </div>
+    <p class="chat-disclaimer">MoodFlix AI can make mistakes. Consider checking important information.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/chatbot.js') }}" defer></script>{% endblock %}

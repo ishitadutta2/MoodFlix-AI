@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Page not found — MoodFlix AI{% endblock %}
+{% block body %}
+<div style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:hidden;">
+  <div class="orb" style="width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div style="position:relative;z-index:10;">
+    <p class="gradient-text" style="font-family:'Sora',sans-serif;font-weight:800;font-size:5.5rem;line-height:1;">404</p>
+    <h1 style="font-size:20px;margin-top:12px;">This page wandered off-script</h1>
+    <p class="muted" style="margin-top:8px;max-width:360px;margin-left:auto;margin-right:auto;">The scene you're looking for isn't in this cut. Let's get you back home.</p>
+    <div class="flex gap-2" style="justify-content:center;margin-top:28px;">
+      <a href="{{ url_for('page_routes.home') }}" class="btn btn-primary">Go home</a>
+      <a href="{{ url_for('page_routes.dashboard') }}" class="btn btn-outline">Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

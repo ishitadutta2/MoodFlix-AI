@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}MoodFlix AI — Movies & music matched to your mood{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">{% endblock %}
+
+{% block body %}
+<div class="landing">
+  <div class="orb" style="width:420px;height:420px;top:-140px;left:-120px;"></div>
+  <div class="orb" style="width:340px;height:340px;top:120px;right:-160px;opacity:.35;"></div>
+
+  <div class="float-particles" aria-hidden="true">
+    <span class="particle p1">♪</span>
+    <span class="particle p2">🎬</span>
+    <span class="particle p3">♫</span>
+    <span class="particle p4">🎵</span>
+    <span class="particle p5">🍿</span>
+  </div>
+
+  <header class="landing-nav">
+    <div class="brand-lockup">
+      <div class="brand-icon"><i data-lucide="sparkles" class="icon" style="color:#fff"></i></div>
+      <span>MoodFlix <span class="gradient-text">AI</span></span>
+    </div>
+    <nav class="links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="{{ url_for('page_routes.about') }}">About</a>
+      <a href="{{ url_for('page_routes.contact') }}">Contact</a>
+    </nav>
+    <div class="flex gap-2">
+      <a href="{{ url_for('page_routes.login') }}" class="btn btn-ghost">Log in</a>
+      <a href="{{ url_for('page_routes.signup') }}" class="btn btn-primary">Sign up</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="chip"><i data-lucide="sparkles" class="icon-sm"></i> Conversational recommendations</span>
+      <h1>Stop scrolling.<br><span class="gradient-text">Start feeling.</span></h1>
+      <p class="lead">Tell MoodFlix how you feel and it hands you the movie and the song for that exact moment — no browsing required, and it remembers you next time.</p>
+      <div class="hero-cta">
+        <a href="{{ url_for('page_routes.signup') }}" class="btn btn-primary">Get started free <i data-lucide="arrow-right" class="icon-sm"></i></a>
+        <a href="#how" class="btn btn-outline">See how it works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>{{ "{:,}".format(total_conversations) }}</b><span>Real conversations</span></div>
+        <div class="stat"><b>{{ (acceptance_rate ~ '%') if total_recommendations > 0 else "—" }}</b><span>Recs loved</span></div>
+        <div class="stat"><b>2</b><span>Mediums, one chat</span></div>
+      </div>
+    </div>
+
+    <div class="mock-window glass" data-parallax>
+      <div class="mock-dots">
+        <span style="background:#F87171"></span><span style="background:#FBBF24"></span><span style="background:#34D399"></span>
+        <span class="font-mono muted-2" style="font-size:12px;margin-left:8px;">moodflix.ai/chat</span>
+      </div>
+      <div class="mock-bubble ai">Hi! I'm MoodFlix AI. How are you feeling tonight?</div>
+      <div class="mock-bubble user">Nostalgic, and craving something slow-paced.</div>
+      <div class="mock-bubble ai" style="max-width:95%;">
+        Here's a pairing that fits — a quiet film and a matching song.
+        <div class="mock-pair">
+          <div class="card"><div class="tile" style="width:34px;height:34px;background:linear-gradient(150deg,hsl(262 70% 22%),hsl(302 65% 12%));"><i data-lucide="film" class="icon-sm"></i></div><span style="font-size:13px;">Paterson</span></div>
+          <div class="card"><div class="tile" style="width:34px;height:34px;background:linear-gradient(150deg,hsl(40 70% 22%),hsl(80 65% 12%));"><i data-lucide="music-2" class="icon-sm"></i></div><span style="font-size:13px;">Hallelujah</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <p class="eyebrow">Why MoodFlix</p>
+    <h2>One conversation, matched to how you actually feel</h2>
+    <div class="feature-grid">
+      <div class="card feature-card"><div class="ic"><i data-lucide="message-square" class="icon"></i></div><h3>Talk, don't search</h3><p>Describe your mood in plain language instead of filtering menus.</p></div>
+      <div class="card feature-card"><div class="ic"><i data-lucide="brain" class="icon"></i></div><h3>Memory that grows</h3><p>Every chat sharpens what it knows about your taste.</p></div>
+      <div class="card feature-card"><div class="ic"><i data-lucide="film" class="icon"></i></div><h3>Movies & music together</h3><p>One assistant covers both mediums in the same reply.</p></div>
+      <div class="card feature-card"><div class="ic"><i data-lucide="shield-check" class="icon"></i></div><h3>Private by default</h3><p>Your chats and preferences stay tied to your account only.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="how">
+    <div class="inner">
+      <p class="eyebrow">The flow</p>
+      <h2>Four steps, every time</h2>
+      <div class="steps">
+        <div class="step"><span class="n gradient-text">01</span><div><h3>Say what's going on</h3><p>"I'm stressed", "feeling nostalgic", or just ask for a genre.</p></div></div>
+        <div class="step"><span class="n gradient-text">02</span><div><h3>MoodFlix reads the moment</h3><p>It weighs your message against your saved taste profile.</p></div></div>
+        <div class="step"><span class="n gradient-text">03</span><div><h3>Get a matched pair</h3><p>A film and a song arrive together, each with a reason attached.</p></div></div>
+        <div class="step"><span class="n gradient-text">04</span><div><h3>React and refine</h3><p>Favorite or pass — the next recommendation adjusts immediately.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="max-width:720px;">
+    <h2 style="margin-bottom:40px;">Questions, answered</h2>
+    <div class="flex flex-col gap-3">
+      <div class="card faq-item"><div class="q"><span>How does MoodFlix learn what I like?</span><i data-lucide="chevron-down" class="icon-sm chev"></i></div><p class="a">Every chat, favorite, and reaction refines a private preference profile the recommender uses on your next request.</p></div>
+      <div class="card faq-item"><div class="q"><span>Does it only recommend movies?</span><i data-lucide="chevron-down" class="icon-sm chev"></i></div><p class="a">No — every conversation can surface both films and songs matched to the same mood or moment.</p></div>
+      <div class="card faq-item"><div class="q"><span>Can I ask for something specific?</span><i data-lucide="chevron-down" class="icon-sm chev"></i></div><p class="a">Yes. Name a genre, actor, mood, or language and MoodFlix folds it into the conversation immediately.</p></div>
+      <div class="card faq-item"><div class="q"><span>Is my chat history private?</span><i data-lucide="chevron-down" class="icon-sm chev"></i></div><p class="a">Your conversations are tied to your account only, and you can permanently delete them anytime from Settings.</p></div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Your next favorite is one chat away</h2>
+    <a href="{{ url_for('page_routes.signup') }}" class="btn btn-primary">Create your account <i data-lucide="arrow-right" class="icon-sm"></i></a>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="brand-lockup"><div class="brand-icon" style="width:30px;height:30px;"><i data-lucide="sparkles" class="icon-sm" style="color:#fff"></i></div><span style="font-size:15px;">MoodFlix <span class="gradient-text">AI</span></span></div>
+    <div class="links">
+      <a href="{{ url_for('page_routes.about') }}">About</a>
+      <a href="{{ url_for('page_routes.contact') }}">Contact</a>
+      <a href="{{ url_for('page_routes.login') }}">Log in</a>
+    </div>
+    <p class="muted-2" style="font-size:12px;">© 2026 MoodFlix AI</p>
+  </footer>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/landing.js') }}" defer></script>{% endblock %}

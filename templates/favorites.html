@@ -1,0 +1,35 @@
+{% extends "app_base.html" %}
+{% block title %}Favorites — MoodFlix AI{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/app_pages.css') }}">{% endblock %}
+
+{% block app_content %}
+<div class="page-wrap">
+  <div class="page-header">
+    <div>
+      <h1>Favorites</h1>
+      <p>Movies, songs, anime, and shows you've saved.</p>
+    </div>
+  </div>
+
+  <div class="fav-tabs" id="list-tabs">
+    <button class="btn btn-outline tab-btn active" data-list="favorites">❤ Favorites</button>
+    <button class="btn btn-outline tab-btn" data-list="watch_later">🕒 Watch Later</button>
+  </div>
+
+  <div class="fav-tabs">
+    <button class="btn btn-outline tab-btn active" data-tab="all">All</button>
+    <button class="btn btn-outline tab-btn" data-tab="movie">Movies</button>
+    <button class="btn btn-outline tab-btn" data-tab="song">Songs</button>
+    <button class="btn btn-outline tab-btn" data-tab="anime">Anime</button>
+    <button class="btn btn-outline tab-btn" data-tab="tv_show">TV Shows</button>
+  </div>
+
+  <div id="favorites-grid" class="favorites-grid"></div>
+  <div id="favorites-empty" class="card page-empty" style="display:none;">
+    <i data-lucide="heart" style="width:32px;height:32px;"></i>
+    <p>Nothing saved yet. Heart a recommendation in chat to add it here.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{{ url_for('static', filename='js/favorites.js') }}" defer></script>{% endblock %}
